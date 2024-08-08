@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ProviderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RumdinController;
+use App\Http\Controllers\RumdinGolonganController;
 use App\Http\Controllers\TanahPoldaKesatuanController;
 use App\Http\Controllers\TanahSatkerMabesController;
 use Illuminate\Support\Facades\Route;
@@ -16,10 +17,12 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('tanah-satker-mabes/{id}/sub', [TanahSatkerMabesController::class, 'create']);
     Route::get('rumdin/{id}/sub', [RumdinController::class, 'create']);
+    Route::get('rumdin-golongan/{id}/sub', [RumdinGolonganController::class, 'create']);
 
     Route::resource('tanah-polda', TanahPoldaKesatuanController::class);
     Route::resource('tanah-satker-mabes', TanahSatkerMabesController::class);
     Route::resource('rumdin', RumdinController::class);
+    Route::resource('rumdin-golongan', RumdinGolonganController::class);
 
     // Route::resource('tanah-polda', TanahPoldaController::class);
     // Route::post('/tanah-polda/sub', [TanahPoldaController::class, 'storeSub']);
