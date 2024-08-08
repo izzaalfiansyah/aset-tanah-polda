@@ -260,7 +260,7 @@
         @method('DELETE')
         @csrf
         <x-modal id="modal-hapus-tanah-satker-mabes" title="Edit Kesatuan">
-            <p>Anda yakin menghapus sub tanah polda terpilih?</p>
+            <p>Anda yakin menghapus tanah satker mabes terpilih?</p>
 
             <x-slot:footer>
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>

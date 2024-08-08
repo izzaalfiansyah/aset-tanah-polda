@@ -15,10 +15,12 @@ Route::get('/', function () {
 Route::middleware('auth', 'verified')->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('tanah-satker-mabes/{id}/sub', [TanahSatkerMabesController::class, 'create']);
+    Route::get('rumdin/{id}/sub', [RumdinController::class, 'create']);
 
     Route::resource('tanah-polda', TanahPoldaKesatuanController::class);
     Route::resource('tanah-satker-mabes', TanahSatkerMabesController::class);
     Route::resource('rumdin', RumdinController::class);
+
     // Route::resource('tanah-polda', TanahPoldaController::class);
     // Route::post('/tanah-polda/sub', [TanahPoldaController::class, 'storeSub']);
     // Route::put('/tanah-polda/sub/{id}', [TanahPoldaController::class, 'updateSub']);
