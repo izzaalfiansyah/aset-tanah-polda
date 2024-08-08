@@ -3,7 +3,7 @@
 use App\Http\Controllers\Auth\ProviderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TanahPoldaController;
+use App\Http\Controllers\TanahPoldaKesatuanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -12,10 +12,11 @@ Route::get('/', function () {
 
 Route::middleware('auth', 'verified')->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
-    Route::resource('tanah-polda', TanahPoldaController::class);
-    Route::post('/tanah-polda/sub', [TanahPoldaController::class, 'storeSub']);
-    Route::put('/tanah-polda/sub/{id}', [TanahPoldaController::class, 'updateSub']);
-    Route::delete('/tanah-polda/sub/{id}', [TanahPoldaController::class, 'destroySub']);
+    Route::resource('tanah-polda', TanahPoldaKesatuanController::class);
+    // Route::resource('tanah-polda', TanahPoldaController::class);
+    // Route::post('/tanah-polda/sub', [TanahPoldaController::class, 'storeSub']);
+    // Route::put('/tanah-polda/sub/{id}', [TanahPoldaController::class, 'updateSub']);
+    // Route::delete('/tanah-polda/sub/{id}', [TanahPoldaController::class, 'destroySub']);
 });
 
 Route::middleware('auth')->group(function () {
