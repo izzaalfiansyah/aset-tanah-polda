@@ -5,7 +5,8 @@
 
 @section('content')
     <x-card title="Edit Rumdin Golongan">
-        <form action="{{ url('/rumdin-golongan') }}" method="POST">
+        <form action="{{ url('/rumdin-golongan/' . $rumdin_golongan->id) }}" method="POST">
+            @method('PUT')
             @csrf
 
             <table class="un-w-full un-whitespace-nowrap table table-bordered un-bg-gray-50">
