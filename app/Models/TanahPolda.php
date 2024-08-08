@@ -14,4 +14,13 @@ class TanahPolda extends Model
     public $fillable = [
         'nama',
     ];
+
+    public $with = [
+        'sub',
+    ];
+
+    function sub()
+    {
+        return $this->hasMany(TanahPoldaSub::class, 'tanah_polda_id');
+    }
 }

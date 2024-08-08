@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tanah_polda_sub', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->foreignId('tanah_polda_id');
             $table->float('jumlah_luas')->nullable();
             $table->integer('jumlah_persil')->nullable();
             $table->float('hibah_luas')->nullable();

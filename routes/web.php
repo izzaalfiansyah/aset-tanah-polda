@@ -13,6 +13,9 @@ Route::get('/', function () {
 Route::middleware('auth', 'verified')->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::resource('tanah-polda', TanahPoldaController::class);
+    Route::post('/tanah-polda/sub', [TanahPoldaController::class, 'storeSub']);
+    Route::put('/tanah-polda/sub/{id}', [TanahPoldaController::class, 'updateSub']);
+    Route::delete('/tanah-polda/sub/{id}', [TanahPoldaController::class, 'destroySub']);
 });
 
 Route::middleware('auth')->group(function () {

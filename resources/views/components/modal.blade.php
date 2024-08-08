@@ -1,5 +1,5 @@
-<div class="modal fade {{ isset($show) ? 'show' : '' }}" id="{{ $id }}"
-    style="display: {{ isset($show) ? 'block' : 'none' }}">
+<div class="modal fade {{ isset($show) ? 'show' : '' }} {{ isset($size) ? 'modal-' . $size : '' }}"
+    id="{{ $id }}" style="display: {{ isset($show) ? 'block' : 'none' }}">
     <div class="modal-dialog">
         <div class="modal-content">
             @if (isset($title))
