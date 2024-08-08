@@ -139,7 +139,7 @@
             </table>
 
             <div class="un-flex un-justify-end un-space-x-4">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-light" onclick="window.history.back()">Batal</button>
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
         </form>

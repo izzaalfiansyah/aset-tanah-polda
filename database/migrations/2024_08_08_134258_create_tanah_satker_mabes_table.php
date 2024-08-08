@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tanah_satker_mabes', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->foreignId('parent_id')->nullable();
+            $table->foreignId('parent_id')->default('0');
             $table->integer('sudah_sertifikat_jumlah_luas')->nullable();
             $table->integer('sudah_sertifikat_jumlah_persil')->nullable();
             $table->integer('hibah_luas')->nullable();

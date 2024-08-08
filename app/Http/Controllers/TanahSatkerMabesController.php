@@ -13,23 +13,50 @@ class TanahSatkerMabesController extends Controller
      */
     public function index()
     {
-        $tanah_satker_mabes = TanahSatkerMabes::all();
+        $tanah_satker_mabes = TanahSatkerMabes::where('parent_id', '0')->get();
+
+        foreach ($tanah_satker_mabes as $key => $item) {
+            $tanah_satker_mabes[$key]->sub = TanahSatkerMabes::where('parent_id', $item->id)->get();
+        }
 
         return view('tanah-satker-mabes.index', compact('tanah_satker_mabes'));
     }
 
     /**
+     * Display a listing of the resource.
+     */
+    public function show($id)
+    {
+        $tanah_satker_mabes = TanahSatkerMabes::find($id);
+
+        $parent = null;
+
+        if ($tanah_satker_mabes->parent_id != '0') {
+            $parent = TanahSatkerMabes::find($tanah_satker_mabes->parent_id);
+        }
+
+        return view('tanah-satker-mabes.edit', compact('tanah_satker_mabes', 'parent'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($id = null)
     {
-        return view('tanah-satker-mabes.create');
+        $tanah_satker_mabes = null;
+
+        if ($id) {
+            $tanah_satker_mabes = TanahSatkerMabes::find($id);
+        }
+
+        return view('tanah-satker-mabes.create', compact('tanah_satker_mabes'));
     }
 
     public function store(Request $req)
     {
         $data = $req->validate([
             'nama' => 'required',
+            'parent_id' => 'nullable',
             'sudah_sertifikat_jumlah_luas' => 'nullable|integer',
             'sudah_sertifikat_jumlah_persil' => 'nullable|integer',
             'hibah_luas' => 'nullable|integer',
@@ -54,6 +81,7 @@ class TanahSatkerMabesController extends Controller
     {
         $data = $req->validate([
             'nama' => 'required',
+            'parent_id' => 'nullable',
             'sudah_sertifikat_jumlah_luas' => 'nullable|integer',
             'sudah_sertifikat_jumlah_persil' => 'nullable|integer',
             'hibah_luas' => 'nullable|integer',
