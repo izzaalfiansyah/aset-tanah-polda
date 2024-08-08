@@ -45,6 +45,19 @@
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+    {{-- my custom --}}
+    <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime/preset-uno.global.js"></script>
+    <script>
+        window.__unocss = {
+            presets: [
+                () => window.__unocss_runtime.presets.presetUno({
+                    prefix: 'un-'
+                }),
+            ],
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime/core.global.js"></script>
     <style>
         .icon-size {
             height: 16px;

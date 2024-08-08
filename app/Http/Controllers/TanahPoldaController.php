@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TanahPolda;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class TanahPoldaController extends Controller
 {
@@ -11,7 +13,9 @@ class TanahPoldaController extends Controller
      */
     public function index()
     {
-        return view('tanah-polda.index');
+        $tanah_polda = TanahPolda::all();
+
+        return view('tanah-polda.index', compact('tanah_polda'));
     }
 
     /**
@@ -27,7 +31,15 @@ class TanahPoldaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'required',
+        ]);
+
+        if (!TanahPolda::create($data)) {
+            return Redirect::back()->withToastError('Tanah polda gagal ditambah.');
+        }
+
+        return Redirect::to('/tanah-polda')->withToastSuccess('Tanah polda berhasil ditambah');
     }
 
     /**
