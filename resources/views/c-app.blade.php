@@ -6,7 +6,7 @@
     <title>{{ config('app.name', 'Laravel') }} &minus; {{ $title }}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" href="assets/media/favicon.ico" />
+    <link rel="shortcut icon" href="{{ asset('/') }}assets/media/favicon.ico" />
     <meta name="theme-color" content="#ffffff">
     <meta name="color-scheme" content="light">
 
@@ -39,12 +39,14 @@
     <!--end::Fonts-->
     <!--begin::Vendor Stylesheets(used for this page only)-->
     @stack('custom-css')
-    <link href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/') }}assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('/') }}assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
+        type="text/css" />
     <!--end::Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/') }}assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/') }}assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 
     {{-- my custom --}}
     <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime/preset-uno.global.js"></script>
@@ -166,12 +168,12 @@
 
     <!--begin::Javascript-->
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-    <script src="assets/plugins/global/plugins.bundle.js"></script>
-    <script src="assets/js/scripts.bundle.js"></script>
-    <script src="assets/js/custom/muhamdaily.js"></script>
+    <script src="{{ asset('/') }}assets/plugins/global/plugins.bundle.js"></script>
+    <script src="{{ asset('/') }}assets/js/scripts.bundle.js"></script>
+    <script src="{{ asset('/') }}assets/js/custom/muhamdaily.js"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->
-    <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="{{ asset('/') }}assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
@@ -187,11 +189,11 @@
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
     @stack('custom-javascript')
-    <script src="assets/js/widgets.bundle.js"></script>
-    <script src="assets/js/custom/apps/chat/chat.js"></script>
-    <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-    <script src="assets/js/custom/utilities/modals/create-campaign.js"></script>
-    <script src="assets/js/custom/utilities/modals/users-search.js"></script>
+    <script src="{{ asset('/') }}assets/js/widgets.bundle.js"></script>
+    <script src="{{ asset('/') }}assets/js/custom/apps/chat/chat.js"></script>
+    <script src="{{ asset('/') }}assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+    <script src="{{ asset('/') }}assets/js/custom/utilities/modals/create-campaign.js"></script>
+    <script src="{{ asset('/') }}assets/js/custom/utilities/modals/users-search.js"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
     @yield('script')

@@ -6,7 +6,7 @@
     <x-card>
         <div class="un-flex un-items-center un-justify-between">
             <div class="un-text-xl un-font-semibold">Tanah Polda</div>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-tambah-tanah-polda">Tambah</button>
+            <a href="{{ url('/tanah-polda/create') }}" class="btn btn-primary">Tambah</a>
         </div>
     </x-card>
 
@@ -89,7 +89,7 @@
                         $totalTotalLuas = 0;
                         $totalTotalPersil = 0;
                     @endphp
-                    @foreach ($tanah_polda as $index => $item)
+                    @forelse ($tanah_polda as $index => $item)
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ strtoupper($item->nama) }}</td>
@@ -110,24 +110,7 @@
                             <td>{{ $item->keterangan }}</td>
                             <td>
                                 <div class="un-space-x-3 un-flex un-justify-center">
-                                    <a href="javascript:void(0);" data-bs-toggle="modal"
-                                        data-bs-target="#modal-edit-tanah-polda" class="un-inline-block"
-                                        onclick="{
-                                $('#edit-tanah-polda-form').attr('action', '{{ url('/tanah-polda/' . $item->id) }}');
-                                $('#edit-tanah-polda-form [name=nama]').val('{{ $item->nama }}');
-                                $('#edit-tanah-polda-form [name=tanah_polda_id]').val('{{ $item->tanah_polda_id }}');
-                                $('#edit-tanah-polda-form [name=sudah_sertifikat_jumlah_luas]').val('{{ $item->sudah_sertifikat_jumlah_luas }}');
-                                $('#edit-tanah-polda-form [name=sudah_sertifikat_jumlah_persil]').val('{{ $item->sudah_sertifikat_jumlah_persil }}');
-                                $('#edit-tanah-polda-form [name=hibah_luas]').val('{{ $item->hibah_luas }}');
-                                $('#edit-tanah-polda-form [name=hibah_persil]').val('{{ $item->hibah_persil }}');
-                                $('#edit-tanah-polda-form [name=sengketa_luas]').val('{{ $item->sengketa_luas }}');
-                                $('#edit-tanah-polda-form [name=sengketa_persil]').val('{{ $item->sengketa_persil }}');
-                                $('#edit-tanah-polda-form [name=swadaya_luas]').val('{{ $item->swadaya_luas }}');
-                                $('#edit-tanah-polda-form [name=swadaya_persil]').val('{{ $item->swadaya_persil }}');
-                                $('#edit-tanah-polda-form [name=pinjam_pakai_luas]').val('{{ $item->pinjam_pakai_luas }}');
-                                $('#edit-tanah-polda-form [name=pinjam_pakai_persil]').val('{{ $item->pinjam_pakai_persil }}');
-                                $('#edit-tanah-polda-form [name=keterangan]').val('{{ $item->keterangan }}');
-                                }">
+                                    <a href="{{ url('/tanah-polda/' . $item->id) }}" class="un-inline-block">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="icon-size">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -166,7 +149,11 @@
                             $totalTotalLuas += $item->total_luas;
                             $totalTotalPersil += $item->total_persil;
                         @endphp
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="18" class="text-center">Data tidak tersedia</td>
+                        </tr>
+                    @endforelse
                     <tr>
                         <td colspan="18" class="text-center"></td>
                     </tr>
@@ -193,273 +180,6 @@
             </table>
         </div>
     </x-card>
-
-    <form action="{{ url('/tanah-polda') }}" method="POST" id="tambah-tanah-polda-form">
-        @csrf
-        <x-modal id="modal-tambah-tanah-polda" title="Tambah Kesatuan" size="xl">
-            <table class="un-w-full un-whitespace-nowrap table table-bordered un-bg-gray-50">
-                <tbody>
-                    {{-- nama --}}
-                    <tr>
-                        <td colspan="3" class="!un-font-semibold !un-text-lg">Kesatuan</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Nama Kesatuan</td>
-                        <td class="!un-bg-white">
-                            <input type="text" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                required name="nama" value="{{ old('nama') }}"
-                                placeholder="Masukkan Nama Kesatuan">
-                        </td>
-                    </tr>
-
-                    {{-- sudah sertifikat --}}
-                    <tr>
-                        <td colspan="3" class="!un-font-semibold !un-text-lg">Sudah Sertifikat</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2" class="align-middle">Jumlah</td>
-                        <td>Luas (M<sup>2</sup>)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="sudah_sertifikat_jumlah_luas" value="{{ old('sudah_sertifikat_jumlah_luas') }}"
-                                placeholder="0">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Persil (Unit)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="sudah_sertifikat_jumlah_persil" value="{{ old('sudah_sertifikat_jumlah_persil') }}"
-                                placeholder="0">
-                        </td>
-                    </tr>
-
-                    {{-- belum sertifikat --}}
-                    <tr>
-                        <td colspan="3" class="!un-font-semibold !un-text-lg">Belum Sertifikat</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2" class="align-middle">Hibah</td>
-                        <td>Luas (M<sup>2</sup>)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="hibah_luas" value="{{ old('hibah_luas') }}" placeholder="0">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Persil (Unit)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="hibah_persil" value="{{ old('hibah_persil') }}" placeholder="0">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2" class="align-middle">Swadaya/Beli</td>
-                        <td>Luas (M<sup>2</sup>)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="swadaya_luas" value="{{ old('swadaya_luas') }}" placeholder="0">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Persil (Unit)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="swadaya_persil" value="{{ old('swadaya_persil') }}" placeholder="0">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2" class="align-middle">Sengketa/Kuasa</td>
-                        <td>Luas (M<sup>2</sup>)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="sengketa_luas" value="{{ old('sengketa_luas') }}" placeholder="0">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Persil (Unit)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="sengketa_persil" value="{{ old('sengketa_persil') }}" placeholder="0">
-                        </td>
-                    </tr>
-
-                    {{-- Pinjam Pakai --}}
-                    <tr>
-                        <td colspan="3" class="!un-font-semibold !un-text-lg">Pinjam Pakai</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Luas (M<sup>2</sup>)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="pinjam_pakai_luas" value="{{ old('pinjam_pakai_luas') }}" placeholder="0">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Persil (Unit)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="pinjam_pakai_persil" value="{{ old('pinjam_pakai_persil') }}" placeholder="0">
-                        </td>
-                    </tr>
-
-                    {{-- keterangan --}}
-                    <tr>
-                        <td colspan="3" class="!un-font-semibold !un-text-lg">Keterangan</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="!un-bg-white">
-                            <textarea class="un-border-none un-bg-transparent un-outline-none un-w-full un-resize-none" rows="3"
-                                name="keterangan" placeholder="Masukkan Keterangan">{{ old('keterangan') }}</textarea>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="mt-5">
-
-            </div>
-
-            <x-slot:footer>
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
-            </x-slot:footer>
-        </x-modal>
-    </form>
-
-    <form action="{{ url('/tanah-polda') }}" method="POST" id="edit-tanah-polda-form">
-        @method('PUT')
-        @csrf
-        <x-modal id="modal-edit-tanah-polda" title="Edit Kesatuan" size="xl">
-            <table class="un-w-full un-whitespace-nowrap table table-bordered un-bg-gray-50">
-                <tbody>
-                    {{-- nama --}}
-                    <tr>
-                        <td colspan="3" class="!un-font-semibold !un-text-lg">Kesatuan</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Nama Kesatuan</td>
-                        <td class="!un-bg-white">
-                            <input type="text" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                required name="nama" value="{{ old('nama') }}"
-                                placeholder="Masukkan Nama Kesatuan">
-                        </td>
-                    </tr>
-
-                    {{-- sudah sertifikat --}}
-                    <tr>
-                        <td colspan="3" class="!un-font-semibold !un-text-lg">Sudah Sertifikat</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2" class="align-middle">Jumlah</td>
-                        <td>Luas (M<sup>2</sup>)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="sudah_sertifikat_jumlah_luas" value="{{ old('sudah_sertifikat_jumlah_luas') }}"
-                                placeholder="0">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Persil (Unit)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="sudah_sertifikat_jumlah_persil" value="{{ old('sudah_sertifikat_jumlah_persil') }}"
-                                placeholder="0">
-                        </td>
-                    </tr>
-
-                    {{-- belum sertifikat --}}
-                    <tr>
-                        <td colspan="3" class="!un-font-semibold !un-text-lg">Belum Sertifikat</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2" class="align-middle">Hibah</td>
-                        <td>Luas (M<sup>2</sup>)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="hibah_luas" value="{{ old('hibah_luas') }}" placeholder="0">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Persil (Unit)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="hibah_persil" value="{{ old('hibah_persil') }}" placeholder="0">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2" class="align-middle">Swadaya/Beli</td>
-                        <td>Luas (M<sup>2</sup>)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="swadaya_luas" value="{{ old('swadaya_luas') }}" placeholder="0">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Persil (Unit)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="swadaya_persil" value="{{ old('swadaya_persil') }}" placeholder="0">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2" class="align-middle">Sengketa/Kuasa</td>
-                        <td>Luas (M<sup>2</sup>)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="sengketa_luas" value="{{ old('sengketa_luas') }}" placeholder="0">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Persil (Unit)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="sengketa_persil" value="{{ old('sengketa_persil') }}" placeholder="0">
-                        </td>
-                    </tr>
-
-                    {{-- Pinjam Pakai --}}
-                    <tr>
-                        <td colspan="3" class="!un-font-semibold !un-text-lg">Pinjam Pakai</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Luas (M<sup>2</sup>)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="pinjam_pakai_luas" value="{{ old('pinjam_pakai_luas') }}" placeholder="0">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Persil (Unit)</td>
-                        <td class="!un-bg-white">
-                            <input type="number" class="un-border-none un-bg-transparent un-outline-none un-w-full"
-                                name="pinjam_pakai_persil" value="{{ old('pinjam_pakai_persil') }}" placeholder="0">
-                        </td>
-                    </tr>
-
-                    {{-- keterangan --}}
-                    <tr>
-                        <td colspan="3" class="!un-font-semibold !un-text-lg">Keterangan</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="!un-bg-white">
-                            <textarea class="un-border-none un-bg-transparent un-outline-none un-w-full un-resize-none" rows="3"
-                                name="keterangan" placeholder="Masukkan Keterangan">{{ old('keterangan') }}</textarea>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="mt-5">
-
-            </div>
-
-            <x-slot:footer>
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
-            </x-slot:footer>
-        </x-modal>
-    </form>
 
     <form action="{{ url('/tanah-polda') }}" method="POST" id="hapus-tanah-polda-form">
         @method('DELETE')

@@ -15,8 +15,10 @@
         <!--begin::Mobile logo-->
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
             <a href="{{ route('home') }}" class="d-lg-none">
-                <img alt="Logo" src="assets/media/logos/default-small.svg" class="theme-light-show h-35px" />
-                <img alt="Logo" src="assets/media/logos/default-small-dark.svg" class="theme-dark-show h-35px" />
+                <img alt="Logo" src="{{ asset('/') }}assets/media/logos/default-small.svg"
+                    class="theme-light-show h-35px" />
+                <img alt="Logo" src="{{ asset('/') }}assets/media/logos/default-small-dark.svg"
+                    class="theme-dark-show h-35px" />
             </a>
         </div>
         <!--end::Mobile logo-->
@@ -139,7 +141,7 @@
                     <div class="cursor-pointer symbol symbol-35px symbol-md-40px"
                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                         data-kt-menu-placement="bottom-end">
-                        <img src="assets/media/avatars/blank.png" alt="user" />
+                        <img src="{{ asset('/') }}assets/media/avatars/blank.png" alt="user" />
                     </div>
                     <!--begin::User account menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
@@ -149,7 +151,7 @@
                             <div class="menu-content d-flex align-items-center px-3">
                                 <!--begin::Avatar-->
                                 <div class="symbol symbol-50px me-5">
-                                    <img alt="Logo" src="assets/media/avatars/blank.png" />
+                                    <img alt="Logo" src="{{ asset('/') }}assets/media/avatars/blank.png" />
                                 </div>
                                 <!--end::Avatar-->
                                 <!--begin::Username-->

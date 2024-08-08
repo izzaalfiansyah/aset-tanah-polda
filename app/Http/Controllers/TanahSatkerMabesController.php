@@ -2,27 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TanahPoldaKesatuan;
+use App\Models\TanahSatkerMabes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
-class TanahPoldaKesatuanController extends Controller
+class TanahSatkerMabesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $tanah_polda = TanahPoldaKesatuan::all();
+        $tanah_satker_mabes = TanahSatkerMabes::all();
 
-        return view('tanah-polda-kesatuan.index', compact('tanah_polda'));
-    }
-
-    public function show($id)
-    {
-        $tanah_polda = TanahPoldaKesatuan::find($id);
-
-        return view('tanah-polda-kesatuan.edit', compact('tanah_polda'));
+        return view('tanah-satker-mabes.index', compact('tanah_satker_mabes'));
     }
 
     /**
@@ -30,7 +23,7 @@ class TanahPoldaKesatuanController extends Controller
      */
     public function create()
     {
-        return view('tanah-polda-kesatuan.create');
+        return view('tanah-satker-mabes.create');
     }
 
     public function store(Request $req)
@@ -50,11 +43,11 @@ class TanahPoldaKesatuanController extends Controller
             'keterangan' => 'nullable',
         ]);
 
-        if (!TanahPoldaKesatuan::create($data)) {
-            return Redirect::back()->withToastError('Tanah polda gagal ditambah.');
+        if (!TanahSatkerMabes::create($data)) {
+            return Redirect::back()->withToastError('Tanah satker mabes gagal ditambah.');
         }
 
-        return Redirect::to('/tanah-polda')->withToastSuccess('Tanah polda berhasil ditambah');
+        return Redirect::to('/tanah-satker-mabes')->withToastSuccess('Tanah satker mabes berhasil ditambah');
     }
 
     public function update(Request $req, $id)
@@ -74,17 +67,17 @@ class TanahPoldaKesatuanController extends Controller
             'keterangan' => 'nullable',
         ]);
 
-        if (!TanahPoldaKesatuan::find($id)->update($data)) {
-            return Redirect::back()->withToastError('Tanah polda gagal diedit.');
+        if (!TanahSatkerMabes::find($id)->update($data)) {
+            return Redirect::back()->withToastError('Tanah satker mabes gagal diedit.');
         }
 
-        return Redirect::to('/tanah-polda')->withToastSuccess('Tanah polda berhasil diedit');
+        return Redirect::to('/tanah-satker-mabes')->withToastSuccess('Tanah satker mabes berhasil diedit');
     }
 
     public function destroy(string $id)
     {
-        TanahPoldaKesatuan::destroy($id);
+        TanahSatkerMabes::destroy($id);
 
-        return Redirect::to('/tanah-polda')->withToastSuccess('Tanah polda berhasil dihapus');
+        return Redirect::to('/tanah-satker-mabes')->withToastSuccess('Tanah satker mabes berhasil dihapus');
     }
 }
