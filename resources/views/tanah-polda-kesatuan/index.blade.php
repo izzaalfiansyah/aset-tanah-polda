@@ -74,20 +74,20 @@
                 <tbody>
                     @php
                         $keys = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                        $totalSudahSertifikatJumlahLuas = 0;
-                        $totalSudahSertifikatJumlahPersil = 0;
-                        $totalHibahLuas = 0;
-                        $totalHibahPersil = 0;
-                        $totalSwadayaLuas = 0;
-                        $totalSwadayaPersil = 0;
-                        $totalSengketaLuas = 0;
-                        $totalSengketaPersil = 0;
-                        $totalBelumSertifikatJumlahLuas = 0;
-                        $totalBelumSertifikatJumlahPersil = 0;
-                        $totalPinjamPakaiLuas = 0;
-                        $totalPinjamPakaiPersil = 0;
-                        $totalTotalLuas = 0;
-                        $totalTotalPersil = 0;
+                        $total_sudah_sertifikat_jumlah_luas = 0;
+                        $total_sudah_sertifikat_jumlah_persil = 0;
+                        $total_hibah_luas = 0;
+                        $total_hibah_persil = 0;
+                        $total_swadaya_luas = 0;
+                        $total_swadaya_persil = 0;
+                        $total_sengketa_luas = 0;
+                        $total_sengketa_persil = 0;
+                        $total_belum_serfikat_jumlah_luas = 0;
+                        $total_belum_serfikat_jumlah_persil = 0;
+                        $total_pinjam_pakai_luas = 0;
+                        $total_pinjam_pakai_persil = 0;
+                        $total_total_luas = 0;
+                        $total_total_persil = 0;
                     @endphp
                     @forelse ($tanah_polda as $index => $item)
                         <tr>
@@ -134,20 +134,20 @@
                         </tr>
 
                         @php
-                            $totalSudahSertifikatJumlahLuas += $item->sudah_sertifikat_jumlah_luas;
-                            $totalSudahSertifikatJumlahPersil += $item->sudah_sertifikat_jumlah_persil;
-                            $totalHibahLuas += $item->hibah_luas;
-                            $totalHibahPersil += $item->hibah_persil;
-                            $totalSwadayaLuas += $item->swadaya_luas;
-                            $totalSwadayaPersil += $item->swadaya_persil;
-                            $totalSengketaLuas += $item->sengketa_luas;
-                            $totalSengketaPersil += $item->sengketa_persil;
-                            $totalBelumSertifikatJumlahLuas += $item->belum_serfikat_jumlah_luas;
-                            $totalBelumSertifikatJumlahPersil += $item->belum_serfikat_jumlah_persil;
-                            $totalPinjamPakaiLuas += $item->pinjam_pakai_luas;
-                            $totalPinjamPakaiPersil += $item->pinjam_pakai_persil;
-                            $totalTotalLuas += $item->total_luas;
-                            $totalTotalPersil += $item->total_persil;
+                            $total_sudah_sertifikat_jumlah_luas += $item->sudah_sertifikat_jumlah_luas;
+                            $total_sudah_sertifikat_jumlah_persil += $item->sudah_sertifikat_jumlah_persil;
+                            $total_hibah_luas += $item->hibah_luas;
+                            $total_hibah_persil += $item->hibah_persil;
+                            $total_swadaya_luas += $item->swadaya_luas;
+                            $total_swadaya_persil += $item->swadaya_persil;
+                            $total_sengketa_luas += $item->sengketa_luas;
+                            $total_sengketa_persil += $item->sengketa_persil;
+                            $total_belum_serfikat_jumlah_luas += $item->belum_serfikat_jumlah_luas;
+                            $total_belum_serfikat_jumlah_persil += $item->belum_serfikat_jumlah_persil;
+                            $total_pinjam_pakai_luas += $item->pinjam_pakai_luas;
+                            $total_pinjam_pakai_persil += $item->pinjam_pakai_persil;
+                            $total_total_luas += $item->total_luas;
+                            $total_total_persil += $item->total_persil;
                         @endphp
                     @empty
                         <tr>
@@ -159,20 +159,20 @@
                     </tr>
                     <tr class="un-bg-gray-50">
                         <td colspan="2" class="text-center un-font-semibold">TOTAL</td>
-                        <td>{{ $totalSudahSertifikatJumlahLuas }}</td>
-                        <td>{{ $totalSudahSertifikatJumlahPersil }}</td>
-                        <td>{{ $totalHibahLuas }}</td>
-                        <td>{{ $totalHibahPersil }}</td>
-                        <td>{{ $totalSwadayaLuas }}</td>
-                        <td>{{ $totalSwadayaPersil }}</td>
-                        <td>{{ $totalSengketaLuas }}</td>
-                        <td>{{ $totalSengketaPersil }}</td>
-                        <td>{{ $totalBelumSertifikatJumlahLuas }}</td>
-                        <td>{{ $totalBelumSertifikatJumlahPersil }}</td>
-                        <td>{{ $totalPinjamPakaiLuas }}</td>
-                        <td>{{ $totalPinjamPakaiPersil }}</td>
-                        <td>{{ $totalTotalLuas }}</td>
-                        <td>{{ $totalTotalPersil }}</td>
+                        <td>{{ $total_sudah_sertifikat_jumlah_luas }}</td>
+                        <td>{{ $total_sudah_sertifikat_jumlah_persil }}</td>
+                        <td>{{ $total_hibah_luas }}</td>
+                        <td>{{ $total_hibah_persil }}</td>
+                        <td>{{ $total_swadaya_luas }}</td>
+                        <td>{{ $total_swadaya_persil }}</td>
+                        <td>{{ $total_sengketa_luas }}</td>
+                        <td>{{ $total_sengketa_persil }}</td>
+                        <td>{{ $total_belum_serfikat_jumlah_luas }}</td>
+                        <td>{{ $total_belum_serfikat_jumlah_persil }}</td>
+                        <td>{{ $total_pinjam_pakai_luas }}</td>
+                        <td>{{ $total_pinjam_pakai_persil }}</td>
+                        <td>{{ $total_total_luas }}</td>
+                        <td>{{ $total_total_persil }}</td>
                         <td></td>
                         <td></td>
                     </tr>

@@ -43,13 +43,13 @@ class TanahSatkerMabesController extends Controller
      */
     public function create($id = null)
     {
-        $tanah_satker_mabes = null;
+        $parent = null;
 
         if ($id) {
-            $tanah_satker_mabes = TanahSatkerMabes::find($id);
+            $parent = TanahSatkerMabes::find($id);
         }
 
-        return view('tanah-satker-mabes.create', compact('tanah_satker_mabes'));
+        return view('tanah-satker-mabes.create', compact('parent'));
     }
 
     public function store(Request $req)

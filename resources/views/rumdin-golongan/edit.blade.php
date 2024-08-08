@@ -151,7 +151,7 @@
                     <tr class="!un-bg-white">
                         <td>
                             <textarea name="keterangan" rows="3"
-                                class="un-border-none un-bg-transparent un-outline-none un-w-full un-resize-none">{{ old('keterangan', $rumdin_golongan->keterangan) }}</textarea>
+                                class="un-border-none un-bg-transparent un-outline-none un-w-full un-resize-none" placeholder="Masukkan Keterangan">{{ old('keterangan', $rumdin_golongan->keterangan) }}</textarea>
                         </td>
                     </tr>
                 </tbody>

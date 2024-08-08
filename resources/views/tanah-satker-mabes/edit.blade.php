@@ -5,12 +5,12 @@
 
 @section('content')
     <x-card title="Edit Tanah Satker Mabes">
-        <form action="{{ url('/tanah-satker-mabes') }}" method="POST">
+        <form action="{{ url('/tanah-satker-mabes/' . $tanah_satker_mabes->od) }}" method="POST">
+            @method('PUT')
             @csrf
 
             <table class="un-w-full un-whitespace-nowrap table table-bordered un-bg-gray-50">
                 <tbody>
-                    {{-- nama --}}
                     <tr>
                         <td colspan="3" class="!un-font-semibold !un-text-lg">Kesatuan</td>
                     </tr>
@@ -40,8 +40,12 @@
                             </td>
                         </tr>
                     @endif
+                </tbody>
+            </table>
 
-                    {{-- sudah sertifikat --}}
+
+            <table class="un-w-full un-whitespace-nowrap table table-bordered un-bg-gray-50">
+                <tbody>
                     <tr>
                         <td colspan="3" class="!un-font-semibold !un-text-lg">Sudah Sertifikat</td>
                     </tr>
@@ -64,8 +68,11 @@
                                 placeholder="0">
                         </td>
                     </tr>
+                </tbody>
+            </table>
 
-                    {{-- belum sertifikat --}}
+            <table class="un-w-full un-whitespace-nowrap table table-bordered un-bg-gray-50">
+                <tbody>
                     <tr>
                         <td colspan="3" class="!un-font-semibold !un-text-lg">Belum Sertifikat</td>
                     </tr>
@@ -120,8 +127,11 @@
                                 value="{{ old('sengketa_persil', $tanah_satker_mabes->sengketa_persil) }}" placeholder="0">
                         </td>
                     </tr>
+                </tbody>
+            </table>
 
-                    {{-- Pinjam Pakai --}}
+            <table class="un-w-full un-whitespace-nowrap table table-bordered un-bg-gray-50">
+                <tbody>
                     <tr>
                         <td colspan="3" class="!un-font-semibold !un-text-lg">Pinjam Pakai</td>
                     </tr>
@@ -143,13 +153,16 @@
                                 placeholder="0">
                         </td>
                     </tr>
+                </tbody>
+            </table>
 
-                    {{-- keterangan --}}
+            <table class="un-w-full un-whitespace-nowrap table table-bordered un-bg-gray-50">
+                <tbody>
                     <tr>
-                        <td colspan="3" class="!un-font-semibold !un-text-lg">Keterangan</td>
+                        <td class="!un-font-semibold !un-text-lg">Keterangan</td>
                     </tr>
                     <tr>
-                        <td colspan="3" class="!un-bg-white">
+                        <td class="!un-bg-white">
                             <textarea class="un-border-none un-bg-transparent un-outline-none un-w-full un-resize-none" rows="3"
                                 name="keterangan" placeholder="Masukkan Keterangan">{{ old('keterangan', $tanah_satker_mabes->keterangan) }}</textarea>
                         </td>
