@@ -5,7 +5,7 @@
 
 @section('content')
     <x-card title="Edit Tanah Satker Mabes">
-        <form action="{{ url('/tanah-satker-mabes/' . $tanah_satker_mabes->od) }}" method="POST">
+        <form action="{{ url('/tanah-satker-mabes/' . $tanah_satker_mabes->id) }}" method="POST">
             @method('PUT')
             @csrf
 
