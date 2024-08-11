@@ -28,6 +28,9 @@
         <div class="un-overflow-x-auto">
             <table class="table table-bordered un-whitespace-nowrap">
                 <thead>
+                    @php
+                        $colspan = 17;
+                    @endphp
                     <tr class="un-bg-gray-50">
                         <th class="un-text-center un-align-middle" rowspan="2" colspan="3">No</th>
                         <th class="un-text-center un-align-middle" rowspan="2">Kesatuan</th>
@@ -38,6 +41,10 @@
                         <th class="un-text-center un-align-middle" colspan="2">Barak</th>
                         <th class="un-text-center un-align-middle">Jumlah Rumdin</th>
                         <th class="un-text-center un-align-middle">Jumlah Kapasitas</th>
+                        @if (request()->user()->role == 'admin')
+                            @php $colspan += 1 @endphp
+                            <th class="un-text-center un-align-middle" rowspan="2">Penanggung Jawab</th>
+                        @endif
                         <th class="un-text-center un-align-middle" rowspan="2">Opsi</th>
                     </tr>
                     <tr class="un-bg-gray-50">
@@ -55,12 +62,12 @@
                         <th class="un-text-center un-align-middle">KK</th>
                     </tr>
                     <tr>
-                        @for ($i = 1; $i <= 15; $i++)
+                        @for ($i = 1; $i <= $colspan - 2; $i++)
                             <th colspan="{{ $i == 1 ? 3 : 1 }}" class="un-text-center">{{ $i }}</th>
                         @endfor
                     </tr>
                     <tr>
-                        <th colspan="17"></th>
+                        <th colspan="{{ $colspan }}"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,6 +104,15 @@
                             <td>{{ $item->barak_kapasitas }}</td>
                             <td>{{ $item->total_jumlah }}</td>
                             <td>{{ $item->total_kapasitas }}</td>
+                            @if (request()->user()->role == 'admin')
+                                @php $ssitemcount = 0 @endphp
+                                @foreach ($item->sub as $sitem)
+                                    @php $ssitemcount += count($sitem->sub) @endphp
+                                @endforeach
+                                <td class="un-align-middle text-center"
+                                    rowspan="{{ count($item->sub) + $ssitemcount + 2 }}">
+                                    {{ $item->user->name }}</td>
+                            @endif
                             <td>
                                 <div class="un-space-x-3 un-flex un-justify-center">
                                     <a href="{{ url('/rumdin/' . $item->id . '/sub') }}"
@@ -307,14 +323,14 @@
                         @endphp
 
                         <tr>
-                            <td colspan="17"></td>
+                            <td colspan="{{ $colspan }}"></td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="17" class="text-center">Data tidak tersedia</td>
+                            <td colspan="{{ $colspan }}" class="text-center">Data tidak tersedia</td>
                         </tr>
                         <tr>
-                            <td colspan="17"></td>
+                            <td colspan="{{ $colspan }}"></td>
                         </tr>
                     @endforelse
 
@@ -333,6 +349,9 @@
                         <td>{{ $total_total_jumlah }}</td>
                         <td>{{ $total_total_kapasitas }}</td>
                         <td></td>
+                        @if (request()->user()->role == 'admin')
+                            <td></td>
+                        @endif
                     </tr>
                 </tbody>
             </table>
@@ -342,7 +361,7 @@
     <form action="{{ url('/rumdin') }}" method="POST" id="hapus-rumdin-form">
         @method('DELETE')
         @csrf
-        <x-modal id="modal-hapus-rumdin" title="Edit Kesatuan">
+        <x-modal id="modal-hapus-rumdin" title="Hapus Rumdin">
             <p>Anda yakin menghapus rumdin terpilih?</p>
 
             <x-slot:footer>

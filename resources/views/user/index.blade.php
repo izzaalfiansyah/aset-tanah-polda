@@ -29,14 +29,22 @@
         <div class="un-overflow-x-auto">
             <table class="table table-bordered un-whitespace-nowrap" id="datatable">
                 <thead>
+                    <tr class="un-bg-gray-50">
+                        <th class="un-text-center !un-pr-2">No</th>
+                        <th class="un-text-center !un-pr-2">Nama</th>
+                        <th class="un-text-center !un-pr-2">Role</th>
+                        <th class="un-text-center !un-pr-2">Alamat</th>
+                        <th class="un-text-center !un-pr-2">Email</th>
+                        <th class="un-text-center !un-pr-2">Telepon</th>
+                        <th class="un-text-center !un-pr-2">Opsi</th>
+                    </tr>
                     <tr>
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>Alamat</th>
-                        <th>Email</th>
-                        <th>Telepon</th>
-                        <th>Role</th>
-                        <th>Opsi</th>
+                        @for ($i = 1; $i <= 7; $i++)
+                            <th class="un-text-center !un-pr-2">{{ $i }}</th>
+                        @endfor
+                    </tr>
+                    <tr>
+                        <th colspan="7"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,10 +52,10 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->name }}</td>
+                            <td>{{ $item->role }}</td>
                             <td>{{ $item->address }}</td>
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->phone }}</td>
-                            <td>{{ $item->role }}</td>
                             <td class="text-center">
                                 <a href="{{ url('/user/' . $item->id) }}" class="un-inline-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

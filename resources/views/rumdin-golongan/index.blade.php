@@ -28,6 +28,9 @@
         <div class="un-overflow-x-auto">
             <table class="table table-bordered un-whitespace-nowrap">
                 <thead>
+                    @php
+                        $colspan = 14;
+                    @endphp
                     <tr class="un-bg-gray-50">
                         <th class="un-text-center un-align-middle" rowspan="5" colspan="2">No</th>
                         <th class="un-text-center un-align-middle" rowspan="5">Nama Satker</th>
@@ -35,6 +38,10 @@
                         <th class="un-text-center un-align-middle" colspan="5">Rumah Dinas</th>
                         <th class="un-text-center un-align-middle" colspan="3">Rumah Non Dinas</th>
                         <th class="un-text-center un-align-middle" rowspan="5">Ket</th>
+                        @if (request()->user()->role == 'admin')
+                            @php $colspan += 1 @endphp
+                            <th class="un-text-center un-align-middle" rowspan="5">Penanggung Jawab</th>
+                        @endif
                         <th class="un-text-center un-align-middle" rowspan="5">Opsi</th>
                     </tr>
                     <tr class="un-bg-gray-50">
@@ -59,12 +66,12 @@
                         <th class="un-text-center un-align-middle">(KK)</th>
                     </tr>
                     <tr>
-                        @for ($i = 1; $i <= 13; $i++)
+                        @for ($i = 1; $i <= $colspan - 1; $i++)
                             <th colspan="{{ $i == 1 ? 2 : 1 }}" class="un-text-center">{{ $i }}</th>
                         @endfor
                     </tr>
                     <tr>
-                        <th colspan="14"></th>
+                        <th colspan="{{ $colspan }}"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,7 +88,7 @@
                         $total_rumah_non_dinas_sewa = 0;
                     @endphp
                     @forelse ($rumdin_golongan as $key => $item)
-                        <tr>
+                        <tr class="un-bg-gray-50">
                             <td>{{ $keys[$key] }}</td>
                             <td></td>
                             <td>{{ $item->nama }}</td>
@@ -95,6 +102,10 @@
                             <td>{{ $item->rumah_non_dinas_orang_tua }}</td>
                             <td>{{ $item->rumah_non_dinas_sewa }}</td>
                             <td>{{ $item->keterangan }}</td>
+                            @if (request()->user()->role == 'admin')
+                                <td class="un-align-middle text-center" rowspan="{{ count($item->sub) + 1 }}">
+                                    {{ $item->user->name }}</td>
+                            @endif
                             <td>
 
                                 <div class="un-space-x-3 un-flex un-justify-center">
@@ -196,14 +207,14 @@
                             @endphp
                         @endforeach
                         <tr>
-                            <td colspan="14"></td>
+                            <td colspan="{{ $colspan }}"></td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="14" class="text-center">Data tidak tersedia</td>
+                            <td colspan="{{ $colspan }}" class="text-center">Data tidak tersedia</td>
                         </tr>
                         <tr>
-                            <td colspan="14"></td>
+                            <td colspan="{{ $colspan }}"></td>
                         </tr>
                     @endforelse
                     <tr class="un-bg-gray-50">
@@ -219,6 +230,9 @@
                         <td>{{ $total_rumah_non_dinas_sewa }}</td>
                         <td></td>
                         <td></td>
+                        @if (request()->user()->role == 'admin')
+                            <td></td>
+                        @endif
                     </tr>
                 </tbody>
             </table>
@@ -228,7 +242,7 @@
     <form action="{{ url('/rumdin-golongan') }}" method="POST" id="hapus-rumdin-golongan-form">
         @method('DELETE')
         @csrf
-        <x-modal id="modal-hapus-rumdin-golongan" title="Edit Kesatuan">
+        <x-modal id="modal-hapus-rumdin-golongan" title="Hapus Rumdin Golongan">
             <p>Anda yakin menghapus rumdin golongan terpilih?</p>
 
             <x-slot:footer>

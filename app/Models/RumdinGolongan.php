@@ -26,4 +26,11 @@ class RumdinGolongan extends Model
         'keterangan',
         'user_id',
     ];
+
+    public $with = ['user'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

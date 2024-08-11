@@ -28,6 +28,9 @@
         <div class="un-overflow-x-auto">
             <table class="table table-bordered un-whitespace-nowrap">
                 <thead>
+                    @php
+                        $colspan = 19;
+                    @endphp
                     <tr class="un-bg-gray-50">
                         <th class="un-text-center un-align-middle" rowspan="3" colspan="2">No</th>
                         <th class="un-text-center un-align-middle" rowspan="3">Kesatuan</th>
@@ -38,6 +41,12 @@
                         <th class="un-text-center un-align-middle" colspan="2" rowspan="2">Pinjam Pakai</th>
                         <th class="un-text-center un-align-middle" colspan="2" rowspan="2">Total</th>
                         <th class="un-text-center un-align-middle" rowspan="3">Keterangan</th>
+                        @if (request()->user()->role == 'admin')
+                            @php
+                                $colspan += 1;
+                            @endphp
+                            <th class="un-text-center un-align-middle" rowspan="3">Penanggung Jawab</th>
+                        @endif
                         <th class="un-text-center un-align-middle" rowspan="3">Opsi</th>
                     </tr>
                     <tr class="un-bg-gray-50">
@@ -63,12 +72,12 @@
                         <th class="un-text-center">Persil (Unit)</th>
                     </tr>
                     <tr>
-                        @for ($i = 1; $i <= 18; $i++)
+                        @for ($i = 1; $i <= $colspan - 1; $i++)
                             <th colspan="{{ $i == 1 ? 2 : 1 }}" class="un-text-center">{{ $i }}</th>
                         @endfor
                     </tr>
                     <tr>
-                        <th colspan="19"></th>
+                        <th colspan="{{ $colspan }}"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -109,6 +118,11 @@
                             <td>{{ $item->total_luas }}</td>
                             <td>{{ $item->total_persil }}</td>
                             <td>{{ $item->keterangan }}</td>
+                            @if (request()->user()->role == 'admin')
+                                <td class="un-align-middle text-center" rowspan="{{ count($item->sub) + 1 }}">
+                                    {{ $item->user->name }}
+                                </td>
+                            @endif
                             <td>
                                 <div class="un-space-x-3 un-flex un-justify-center">
                                     <a href="{{ url('/tanah-satker-mabes/' . $item->id . '/sub') }}"
@@ -225,14 +239,14 @@
                             @endphp
                         @endforeach
                         <tr>
-                            <td colspan="19" class="text-center"></td>
+                            <td colspan="{{ $colspan }}" class="text-center"></td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="19" class="text-center">Data tidak tersedia</td>
+                            <td colspan="{{ $colspan }}" class="text-center">Data tidak tersedia</td>
                         </tr>
                         <tr>
-                            <td colspan="19" class="text-center"></td>
+                            <td colspan="{{ $colspan }}" class="text-center"></td>
                         </tr>
                     @endforelse
                     <tr class="un-bg-gray-50">
@@ -253,6 +267,9 @@
                         <td>{{ $total_total_persil }}</td>
                         <td></td>
                         <td></td>
+                        @if (request()->user()->role == 'admin')
+                            <td></td>
+                        @endif
                     </tr>
                 </tbody>
             </table>
@@ -262,7 +279,7 @@
     <form action="{{ url('/tanah-satker-mabes') }}" method="POST" id="hapus-tanah-satker-mabes">
         @method('DELETE')
         @csrf
-        <x-modal id="modal-hapus-tanah-satker-mabes" title="Edit Kesatuan">
+        <x-modal id="modal-hapus-tanah-satker-mabes" title="Hapus Tanah Satker Mabes">
             <p>Anda yakin menghapus tanah satker mabes terpilih?</p>
 
             <x-slot:footer>

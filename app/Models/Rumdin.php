@@ -28,10 +28,17 @@ class Rumdin extends Model
         'user_id',
     ];
 
+    public $with = ['user'];
+
     public $appends = [
         'total_jumlah',
         'total_kapasitas',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     function totalJumlah(): Attribute
     {

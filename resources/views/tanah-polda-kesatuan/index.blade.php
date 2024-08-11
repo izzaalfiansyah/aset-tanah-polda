@@ -28,6 +28,9 @@
         <div class="un-overflow-x-auto">
             <table class="table table-bordered un-whitespace-nowrap">
                 <thead>
+                    @php
+                        $colspan = 18;
+                    @endphp
                     <tr class="un-bg-gray-50">
                         <th class="un-text-center un-align-middle" rowspan="3">No</th>
                         <th class="un-text-center un-align-middle" rowspan="3">Kesatuan</th>
@@ -38,6 +41,12 @@
                         <th class="un-text-center un-align-middle" colspan="2" rowspan="2">Pinjam Pakai</th>
                         <th class="un-text-center un-align-middle" colspan="2" rowspan="2">Total</th>
                         <th class="un-text-center un-align-middle" rowspan="3">Keterangan</th>
+                        @if (request()->user()->role == 'admin')
+                            @php
+                                $colspan += 1;
+                            @endphp
+                            <th class="un-text-center un-align-middle" rowspan="3">Penanggung Jawab</th>
+                        @endif
                         <th class="un-text-center un-align-middle" rowspan="3">Opsi</th>
                     </tr>
                     <tr class="un-bg-gray-50">
@@ -63,12 +72,12 @@
                         <th class="un-text-center">Persil (Unit)</th>
                     </tr>
                     <tr>
-                        @for ($i = 1; $i <= 18; $i++)
+                        @for ($i = 1; $i <= $colspan; $i++)
                             <th class="un-text-center">{{ $i }}</th>
                         @endfor
                     </tr>
                     <tr>
-                        <th colspan="18"></th>
+                        <th colspan="{{ $colspan }}"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -108,6 +117,9 @@
                             <td>{{ $item->total_luas }}</td>
                             <td>{{ $item->total_persil }}</td>
                             <td>{{ $item->keterangan }}</td>
+                            @if (request()->user()->role == 'admin')
+                                <td>{{ $item->user->name }}</td>
+                            @endif
                             <td>
                                 <div class="un-space-x-3 un-flex un-justify-center">
                                     <a href="{{ url('/tanah-polda/' . $item->id) }}" class="un-inline-block">
@@ -151,11 +163,11 @@
                         @endphp
                     @empty
                         <tr>
-                            <td colspan="18" class="text-center">Data tidak tersedia</td>
+                            <td colspan="{{ $colspan }}" class="text-center">Data tidak tersedia</td>
                         </tr>
                     @endforelse
                     <tr>
-                        <td colspan="18" class="text-center"></td>
+                        <td colspan="{{ $colspan }}" class="text-center"></td>
                     </tr>
                     <tr class="un-bg-gray-50">
                         <td colspan="2" class="text-center un-font-semibold">TOTAL</td>
@@ -184,7 +196,7 @@
     <form action="{{ url('/tanah-polda') }}" method="POST" id="hapus-tanah-polda-form">
         @method('DELETE')
         @csrf
-        <x-modal id="modal-hapus-tanah-polda" title="Edit Kesatuan">
+        <x-modal id="modal-hapus-tanah-polda" title="Hapus Tanah Polda">
             <p>Anda yakin menghapus tanah polda terpilih?</p>
 
             <x-slot:footer>

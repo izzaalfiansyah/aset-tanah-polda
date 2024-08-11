@@ -29,12 +29,19 @@ class TanahSatkerMabes extends Model
         'user_id',
     ];
 
+    public $with = ['user'];
+
     public $appends = [
         'belum_sertifikat_jumlah_luas',
         'belum_sertifikat_jumlah_persil',
         'total_luas',
         'total_persil',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function belumSertifikatJumlahLuas(): Attribute
     {
