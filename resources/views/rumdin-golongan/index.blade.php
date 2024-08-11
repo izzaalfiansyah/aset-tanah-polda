@@ -25,6 +25,11 @@
     <div class="mb-5"></div>
 
     <x-card>
+        @if (request()->user()->role == 'admin')
+            <div class="mb-5">
+                <x-filter-user></x-filter-user>
+            </div>
+        @endif
         <div class="un-overflow-x-auto">
             <table class="table table-bordered un-whitespace-nowrap">
                 <thead>
@@ -236,6 +241,9 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="mt-5">
+            {{ $rumdin_golongan->links() }}
         </div>
     </x-card>
 

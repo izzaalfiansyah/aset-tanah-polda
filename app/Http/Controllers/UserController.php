@@ -15,9 +15,21 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $req)
     {
-        $user = User::all();
+        $builder = new User;
+
+        if ($req->q) {
+            $builder = $builder->where(function ($query) use ($req) {
+                return $query->where('name', 'like', "%$req->q%")
+                    ->orWhere('role', 'like', "%$req->q%")
+                    ->orWhere('address', 'like', "%$req->q%")
+                    ->orWhere('email', 'like', "%$req->q%")
+                    ->orWhere('phone', 'like', "%$req->q%");
+            });
+        }
+
+        $user = $builder->paginate(10)->withQueryString();
 
         return view('user.index', compact('user'));
     }

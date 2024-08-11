@@ -201,7 +201,12 @@
         <link href="https://cdn.datatables.net/v/bs5/dt-2.1.3/datatables.min.css" rel="stylesheet">
         <script src="https://cdn.datatables.net/v/bs5/dt-2.1.3/datatables.min.js"></script>
         <script>
-            let table = new DataTable('#datatable');
+            let table = new DataTable('#datatable', {
+                ordering: false,
+                languange: {
+                    zeroRecords: 'Data tidak tersedia.'
+                }
+            });
         </script>
     @endif
     @yield('script')

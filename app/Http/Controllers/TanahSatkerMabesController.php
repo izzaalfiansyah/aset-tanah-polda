@@ -12,7 +12,7 @@ class TanahSatkerMabesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $req)
     {
         $builder = TanahSatkerMabes::where('parent_id', '0');
 
@@ -20,7 +20,11 @@ class TanahSatkerMabesController extends Controller
             $builder = $builder->where('user_id', Auth::id());
         }
 
-        $tanah_satker_mabes = $builder->get();
+        if ($req->user_id) {
+            $builder = $builder->where('user_id', $req->user_id);
+        }
+
+        $tanah_satker_mabes = $builder->paginate(5)->withQueryString();
 
         foreach ($tanah_satker_mabes as $key => $item) {
             $tanah_satker_mabes[$key]->sub = TanahSatkerMabes::where('parent_id', $item->id)->get();

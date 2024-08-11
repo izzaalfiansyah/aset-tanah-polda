@@ -12,7 +12,7 @@ class RumdinController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $req)
     {
         $builder = Rumdin::where('parent_id', '0');
 
@@ -20,7 +20,11 @@ class RumdinController extends Controller
             $builder = $builder->where('user_id', Auth::id());
         }
 
-        $rumdin = $builder->get();
+        if ($req->user_id) {
+            $builder = $builder->where('user_id', $req->user_id);
+        }
+
+        $rumdin = $builder->paginate(5)->withQueryString();
 
         foreach ($rumdin as $key => $item) {
             $sub = Rumdin::where('parent_id', $item->id)->get();

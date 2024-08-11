@@ -12,7 +12,7 @@ class RumdinGolonganController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $req)
     {
         $builder = RumdinGolongan::where('parent_id', '0');
 
@@ -20,7 +20,11 @@ class RumdinGolonganController extends Controller
             $builder = $builder->where('user_id', Auth::id());
         }
 
-        $rumdin_golongan = $builder->get();
+        if ($req->user_id) {
+            $builder = $builder->where('user_id', $req->user_id);
+        }
+
+        $rumdin_golongan = $builder->paginate(5)->withQueryString();
 
         foreach ($rumdin_golongan as $key => $item) {
             $sub = RumdinGolongan::where('parent_id', $item->id)->get();

@@ -26,21 +26,36 @@
     <div class="mb-5"></div>
 
     <x-card>
+        <div class="mb-5">
+            <form action="" method="get" class="un-relative">
+                <button
+                    class="un-block un-outline-none un-bg-transparent un-border-none un-absolute un-top-0 un-bottom-0 un-right-0 un-w-12 un-flex un-items-center un-justify-center"
+                    type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="un-size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    </svg>
+                </button>
+                <input type="text" value="{{ request()->get('q') }}" autocomplete="off" class="form-control !un-pr-12"
+                    placeholder="Cari..." name="q">
+            </form>
+        </div>
         <div class="un-overflow-x-auto">
-            <table class="table table-bordered un-whitespace-nowrap" id="datatable">
+            <table class="table table-bordered un-whitespace-nowrap">
                 <thead>
                     <tr class="un-bg-gray-50">
-                        <th class="un-text-center !un-pr-2">No</th>
-                        <th class="un-text-center !un-pr-2">Nama</th>
-                        <th class="un-text-center !un-pr-2">Role</th>
-                        <th class="un-text-center !un-pr-2">Alamat</th>
-                        <th class="un-text-center !un-pr-2">Email</th>
-                        <th class="un-text-center !un-pr-2">Telepon</th>
-                        <th class="un-text-center !un-pr-2">Opsi</th>
+                        <th class="text-center">No</th>
+                        <th class="text-center">Nama</th>
+                        <th class="text-center">Role</th>
+                        <th class="text-center">Alamat</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Telepon</th>
+                        <th class="text-center">Opsi</th>
                     </tr>
                     <tr>
                         @for ($i = 1; $i <= 7; $i++)
-                            <th class="un-text-center !un-pr-2">{{ $i }}</th>
+                            <th class="text-center">{{ $i }}</th>
                         @endfor
                     </tr>
                     <tr>
@@ -48,7 +63,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($user as $item)
+                    @forelse ($user as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->name }}</td>
@@ -78,9 +93,16 @@
                                 </a>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="7" class="text-center">Data tidak tersedia.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
+        </div>
+        <div class="mt-5">
+            {{ $user->links() }}
         </div>
     </x-card>
 

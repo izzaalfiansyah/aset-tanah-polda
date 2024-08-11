@@ -12,7 +12,7 @@ class TanahPoldaKesatuanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $req)
     {
         $builder = new TanahPoldaKesatuan;
 
@@ -20,7 +20,11 @@ class TanahPoldaKesatuanController extends Controller
             $builder = $builder->where('user_id', Auth::id());
         }
 
-        $tanah_polda = $builder->get();
+        if ($req->user_id) {
+            $builder = $builder->where('user_id', $req->user_id);
+        }
+
+        $tanah_polda = $builder->paginate(10)->withQueryString();
 
         return view('tanah-polda-kesatuan.index', compact('tanah_polda'));
     }

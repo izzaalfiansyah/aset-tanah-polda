@@ -5,7 +5,9 @@
 
     {{ $slot }}
 
-    @error($name)
-        <div class="invalid-feedback" style="display: block">{{ $message }}</div>
-    @enderror
+    @if (isset($name))
+        @error($name)
+            <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+        @enderror
+    @endif
 </div>
