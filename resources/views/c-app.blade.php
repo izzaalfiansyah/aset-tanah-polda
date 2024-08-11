@@ -166,6 +166,11 @@
     </div>
     <!--end::Scrolltop-->
 
+    <div id="loading-mask"
+        style="display: block; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; background: white; display: flex; justify-content: center; align-items: center;">
+        Memuat...
+    </div>
+
     <!--begin::Javascript-->
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
     <script src="{{ asset('/') }}assets/plugins/global/plugins.bundle.js"></script>
@@ -196,6 +201,13 @@
     <script src="{{ asset('/') }}assets/js/custom/utilities/modals/users-search.js"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
+    <script>
+        window.onload = function() {
+            // setTimeout(() => {
+            document.getElementById('loading-mask').style.display = 'none';
+            // }, 400)
+        }
+    </script>
 
     @if (isset($isDataTable))
         <link href="https://cdn.datatables.net/v/bs5/dt-2.1.3/datatables.min.css" rel="stylesheet">
