@@ -25,6 +25,7 @@ class Rumdin extends Model
         'rusus_kapasitas',
         'barak_jumlah',
         'barak_kapasitas',
+        'user_id',
     ];
 
     public $appends = [

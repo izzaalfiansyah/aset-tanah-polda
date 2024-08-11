@@ -24,5 +24,6 @@ class RumdinGolongan extends Model
         'rumah_non_dinas_orang_tua',
         'rumah_non_dinas_sewa',
         'keterangan',
+        'user_id',
     ];
 }

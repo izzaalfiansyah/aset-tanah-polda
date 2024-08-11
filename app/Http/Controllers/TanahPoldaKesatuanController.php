@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TanahPoldaKesatuan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class TanahPoldaKesatuanController extends Controller
@@ -13,7 +14,13 @@ class TanahPoldaKesatuanController extends Controller
      */
     public function index()
     {
-        $tanah_polda = TanahPoldaKesatuan::all();
+        $builder = new TanahPoldaKesatuan;
+
+        if (Auth::user()->role != 'admin') {
+            $builder = $builder->where('user_id', Auth::id());
+        }
+
+        $tanah_polda = $builder->get();
 
         return view('tanah-polda-kesatuan.index', compact('tanah_polda'));
     }
@@ -49,6 +56,8 @@ class TanahPoldaKesatuanController extends Controller
             'pinjam_pakai_persil' => 'nullable|integer',
             'keterangan' => 'nullable',
         ]);
+
+        $data['user_id'] = $req->user()->id;
 
         if (!TanahPoldaKesatuan::create($data)) {
             return Redirect::back()->withToastError('Tanah polda gagal ditambah.');

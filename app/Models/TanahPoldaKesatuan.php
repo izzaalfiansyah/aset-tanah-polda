@@ -25,6 +25,7 @@ class TanahPoldaKesatuan extends Model
         'pinjam_pakai_luas',
         'pinjam_pakai_persil',
         'keterangan',
+        'user_id',
     ];
 
     public $appends = [

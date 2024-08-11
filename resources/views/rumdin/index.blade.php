@@ -313,6 +313,9 @@
                         <tr>
                             <td colspan="17" class="text-center">Data tidak tersedia</td>
                         </tr>
+                        <tr>
+                            <td colspan="17"></td>
+                        </tr>
                     @endforelse
 
                     <tr class="un-bg-gray-50">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rumdin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class RumdinController extends Controller
@@ -13,7 +14,13 @@ class RumdinController extends Controller
      */
     public function index()
     {
-        $rumdin = Rumdin::where('parent_id', '0')->get();
+        $builder = Rumdin::where('parent_id', '0');
+
+        if (Auth::user()->role != 'admin') {
+            $builder = $builder->where('user_id', Auth::id());
+        }
+
+        $rumdin = $builder->get();
 
         foreach ($rumdin as $key => $item) {
             $sub = Rumdin::where('parent_id', $item->id)->get();
@@ -84,6 +91,8 @@ class RumdinController extends Controller
             'barak_jumlah' => 'nullable|integer',
             'barak_kapasitas' => 'nullable|integer',
         ]);
+
+        $data['user_id'] = $req->user()->id;
 
         if (!Rumdin::create($data)) {
             return Redirect::back()->withToastError('Rumdin gagal ditambah.');

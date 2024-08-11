@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TanahSatkerMabes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class TanahSatkerMabesController extends Controller
@@ -13,7 +14,13 @@ class TanahSatkerMabesController extends Controller
      */
     public function index()
     {
-        $tanah_satker_mabes = TanahSatkerMabes::where('parent_id', '0')->get();
+        $builder = TanahSatkerMabes::where('parent_id', '0');
+
+        if (Auth::user()->role != 'admin') {
+            $builder = $builder->where('user_id', Auth::id());
+        }
+
+        $tanah_satker_mabes = $builder->get();
 
         foreach ($tanah_satker_mabes as $key => $item) {
             $tanah_satker_mabes[$key]->sub = TanahSatkerMabes::where('parent_id', $item->id)->get();
@@ -69,6 +76,8 @@ class TanahSatkerMabesController extends Controller
             'pinjam_pakai_persil' => 'nullable|integer',
             'keterangan' => 'nullable',
         ]);
+
+        $data['user_id'] = $req->user()->id;
 
         if (!TanahSatkerMabes::create($data)) {
             return Redirect::back()->withToastError('Tanah satker mabes gagal ditambah.');

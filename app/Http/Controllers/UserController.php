@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Province;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -50,6 +51,8 @@ class UserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)],
             'password' => ['required', 'confirmed', Password::default()],
         ]);
+
+        $data['password'] = Hash::make($request->password);
 
         if (!User::create($data)) {
             return Redirect::back()->withToastError('User gagal ditambah.');
@@ -106,6 +109,8 @@ class UserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($id)],
             'password' => ['nullable', 'confirmed', Password::default()],
         ]);
+
+        $data['password'] = Hash::make($request->password);
 
         if (!$request->password) {
             unset($data['password']);

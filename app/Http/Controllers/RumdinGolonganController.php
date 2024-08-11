@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RumdinGolongan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class RumdinGolonganController extends Controller
@@ -13,7 +14,13 @@ class RumdinGolonganController extends Controller
      */
     public function index()
     {
-        $rumdin_golongan = RumdinGolongan::where('parent_id', '0')->get();
+        $builder = RumdinGolongan::where('parent_id', '0');
+
+        if (Auth::user()->role != 'admin') {
+            $builder = $builder->where('user_id', Auth::id());
+        }
+
+        $rumdin_golongan = $builder->get();
 
         foreach ($rumdin_golongan as $key => $item) {
             $sub = RumdinGolongan::where('parent_id', $item->id)->get();
@@ -75,6 +82,8 @@ class RumdinGolonganController extends Controller
             'rumah_non_dinas_sewa' => 'nullable|integer',
             'keterangan' => 'nullable',
         ]);
+
+        $data['user_id'] = $req->user()->id;
 
         if (!RumdinGolongan::create($data)) {
             return Redirect::back()->withToastError('Rumdin golongan gagal ditambah.');

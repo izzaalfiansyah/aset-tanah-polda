@@ -202,6 +202,9 @@
                         <tr>
                             <td colspan="14" class="text-center">Data tidak tersedia</td>
                         </tr>
+                        <tr>
+                            <td colspan="14"></td>
+                        </tr>
                     @endforelse
                     <tr class="un-bg-gray-50">
                         <td colspan="3" class="text-center un-uppercase un-font-semibold">Total</td>
