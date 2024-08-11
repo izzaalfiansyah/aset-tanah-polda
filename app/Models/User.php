@@ -71,6 +71,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $username;
     }
 
+    public $with = ['province', 'district', 'subdistrict'];
+
     public function province()
     {
         return $this->belongsTo(Province::class);

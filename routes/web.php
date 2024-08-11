@@ -7,6 +7,7 @@ use App\Http\Controllers\RumdinController;
 use App\Http\Controllers\RumdinGolonganController;
 use App\Http\Controllers\TanahPoldaKesatuanController;
 use App\Http\Controllers\TanahSatkerMabesController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,6 +24,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::resource('tanah-satker-mabes', TanahSatkerMabesController::class);
     Route::resource('rumdin', RumdinController::class);
     Route::resource('rumdin-golongan', RumdinGolonganController::class);
+    Route::resource('user', UserController::class);
 
     // Route::resource('tanah-polda', TanahPoldaController::class);
     // Route::post('/tanah-polda/sub', [TanahPoldaController::class, 'storeSub']);

@@ -196,6 +196,14 @@
     <script src="{{ asset('/') }}assets/js/custom/utilities/modals/users-search.js"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
+
+    @if (isset($isDataTable))
+        <link href="https://cdn.datatables.net/v/bs5/dt-2.1.3/datatables.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/v/bs5/dt-2.1.3/datatables.min.js"></script>
+        <script>
+            let table = new DataTable('#datatable');
+        </script>
+    @endif
     @yield('script')
 </body>
 <!--end::Body-->
