@@ -30,6 +30,12 @@
                 <x-filter-user></x-filter-user>
             </div>
         @endif
+        <div class="mb-5">
+            <button
+                onclick="exportExcel(document.querySelector('table.un-whitespace-nowrap'),'rumdin-golongan-{{ date('Y-m-d') }}')"
+                class="btn btn-success">Export
+                Excel</button>
+        </div>
         <div class="un-overflow-x-auto">
             <table class="table table-bordered un-whitespace-nowrap">
                 <thead>

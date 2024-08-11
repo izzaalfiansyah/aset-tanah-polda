@@ -207,6 +207,20 @@
             document.getElementById('loading-mask').style.display = 'none';
             // }, 400)
         }
+
+        function exportExcel(table, filename = '') {
+            var dataType = 'application/vnd.ms-excel';
+            var tableHTML = table.outerHTML
+                .replace(/<a[^>]*>|<\/a>/gi, "")
+                .replace(/<svg[^>]*>|<\/svg>/gi, "")
+                .replace("<table", "<table border='1'")
+                .replace(/ /g, '%20');
+
+            const a = document.createElement("a");
+            a.href = 'data:' + dataType + ',' + tableHTML;
+            a.download = filename ? filename + '.xls' : "{{ date('Y-m-d') }}.xls";
+            a.click();
+        }
     </script>
 
     @if (isset($isDataTable))
