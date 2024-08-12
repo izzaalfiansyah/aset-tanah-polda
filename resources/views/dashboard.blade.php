@@ -30,9 +30,9 @@
                         label: 'Luas',
                         data: [
                             // konversi ke hektar
-                            '{{ $tanah_polda->sudah_sertifikat_jumlah_luas / 10000 }}',
-                            '{{ $tanah_polda->belum_sertifikat_jumlah_luas / 10000 }}',
-                            '{{ $tanah_polda->pinjam_pakai_luas / 10000 }}',
+                            '{{ $tanah_polda->sudah_sertifikat_jumlah_luas }}',
+                            '{{ $tanah_polda->belum_sertifikat_jumlah_luas }}',
+                            '{{ $tanah_polda->pinjam_pakai_luas }}',
                         ],
                         backgroundColor: ['#3f97fe'],
                         borderWidth: 1
@@ -64,7 +64,7 @@
                         callbacks: {
                             label: function(ctx, i) {
                                 if (ctx.dataset.label.toLowerCase() == 'luas') {
-                                    return 'Luas (hektar): ' + ctx.parsed.y.toFixed(0);
+                                    return 'Luas (m): ' + ctx.parsed.y;
                                 } else {
                                     return 'Jumlah Unit: ' + ctx.parsed.y;
                                 }

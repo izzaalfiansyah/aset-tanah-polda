@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $tanah_polda = TanahPoldaKesatuan::select(
+        $builder = TanahPoldaKesatuan::select(
             DB::raw('sum(sudah_sertifikat_jumlah_luas) as sudah_sertifikat_jumlah_luas'),
             DB::raw('sum(sudah_sertifikat_jumlah_persil) as sudah_sertifikat_jumlah_persil'),
             DB::raw('sum(hibah_luas) as hibah_luas'),
@@ -22,9 +22,13 @@ class HomeController extends Controller
             DB::raw('sum(sengketa_persil) as sengketa_persil'),
             DB::raw('sum(pinjam_pakai_luas) as pinjam_pakai_luas'),
             DB::raw('sum(pinjam_pakai_persil) as pinjam_pakai_persil'),
-        )->first();
+        );
 
-        // return $tanah_polda;
+        if (Auth::user()->role != 'admin') {
+            $builder = $builder->where('user_id', Auth::id());
+        }
+
+        $tanah_polda = $builder->first();
 
         return view('dashboard', compact('tanah_polda'));
 
