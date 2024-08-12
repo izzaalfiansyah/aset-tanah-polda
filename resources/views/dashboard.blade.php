@@ -1,39 +1,122 @@
-@extends('app', [
+@extends('c-app', [
     'title' => 'Dashboard',
+    // 'showTitle' => true,
 ])
 
 @section('content')
-    @include('sweetalert::alert')
-    <div class="d-flex flex-column flex-column-fluid">
-        <!--begin::Toolbar-->
-        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-            <!--begin::Toolbar container-->
-            <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
-                <!--begin::Page title-->
-                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                    <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-                        Dashboard
-                        @if (auth()->user()->role == 'admin')
-                            Admin
-                        @else
-                            User
-                        @endif
-                    </h1>
-                    <!--end::Title-->
-                </div>
-                <!--end::Page title-->
-            </div>
-            <!--end::Toolbar container-->
-        </div>
-        <!--end::Toolbar-->
-        <!--begin::Content-->
-        <div id="kt_app_content" class="app-content flex-column-fluid">
-            <!--begin::Content container-->
-            <div id="kt_app_content_container" class="app-container container-fluid">
-            </div>
-            <!--end::Content container-->
-        </div>
-        <!--end::Content-->
-    </div>
+    <x-card>
+        <div class="un-text-center un-text-xl un-font-semibold">DIAGRAM TANAH POLDA</div>
+    </x-card>
+    <div class="mb-5"></div>
+    <x-card>
+        <canvas id="bar-chart"></canvas>
+    </x-card>
+    <div class="mb-5"></div>
+    <x-card>
+        <canvas id="pie-chart" style="max-height: 80vh"></canvas>
+    </x-card>
+@endsection
+
+@section('script')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctxBar = document.getElementById('bar-chart');
+
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['Sudah Sertifikat', 'Belum Sertifikat', 'Tanah Pinjam'],
+                datasets: [{
+                        label: 'Luas',
+                        data: [
+                            // konversi ke hektar
+                            '{{ $tanah_polda->sudah_sertifikat_jumlah_luas / 10000 }}',
+                            '{{ $tanah_polda->belum_sertifikat_jumlah_luas / 10000 }}',
+                            '{{ $tanah_polda->pinjam_pakai_luas / 10000 }}',
+                        ],
+                        backgroundColor: ['#3f97fe'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Unit',
+                        data: [
+                            '{{ $tanah_polda->sudah_sertifikat_jumlah_persil }}',
+                            '{{ $tanah_polda->belum_sertifikat_jumlah_persil }}',
+                            '{{ $tanah_polda->pinjam_pakai_persil }}',
+                        ],
+                        backgroundColor: ['#ff1931'],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(ctx, i) {
+                                if (ctx.dataset.label.toLowerCase() == 'luas') {
+                                    return 'Luas (hektar): ' + ctx.parsed.y.toFixed(0);
+                                } else {
+                                    return 'Jumlah Unit: ' + ctx.parsed.y;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const ctxPie = document.getElementById('pie-chart');
+        new Chart(ctxPie, {
+            type: 'doughnut',
+            data: {
+                labels: ['Sudah Sertifikat', 'Belum Sertifikat', 'Tanah Pinjam'],
+                datasets: [{
+                        label: 'Luas',
+                        data: [
+                            '{{ $tanah_polda->sudah_sertifikat_jumlah_luas }}',
+                            '{{ $tanah_polda->belum_sertifikat_jumlah_luas }}',
+                            '{{ $tanah_polda->pinjam_pakai_luas }}',
+                        ],
+                        backgroundColor: ['#3f97fe', '#ff1931', '#6b7280'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Unit',
+                        data: [
+                            '{{ $tanah_polda->sudah_sertifikat_jumlah_persil }}',
+                            '{{ $tanah_polda->belum_sertifikat_jumlah_persil }}',
+                            '{{ $tanah_polda->pinjam_pakai_persil }}',
+                        ],
+                        backgroundColor: ['#3f97fe', '#ff1931', '#6b7280'],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(ctx, i) {
+                                if (ctx.dataset.label.toLowerCase() == 'luas') {
+                                    return 'Luas (m): ' + ctx.dataset.data[ctx.dataIndex];
+                                } else {
+                                    return 'Jumlah Unit: ' + ctx.dataset.data[ctx.dataIndex];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 @endsection
