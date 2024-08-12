@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\ProviderController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PembangunanRumdinController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RumdinController;
 use App\Http\Controllers\RumdinGolonganController;
@@ -19,11 +20,13 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('tanah-satker-mabes/{id}/sub', [TanahSatkerMabesController::class, 'create']);
     Route::get('rumdin/{id}/sub', [RumdinController::class, 'create']);
     Route::get('rumdin-golongan/{id}/sub', [RumdinGolonganController::class, 'create']);
+    Route::get('pembangunan-rumdin/{id}/sub', [PembangunanRumdinController::class, 'create']);
 
     Route::resource('tanah-polda', TanahPoldaKesatuanController::class);
     Route::resource('tanah-satker-mabes', TanahSatkerMabesController::class);
     Route::resource('rumdin', RumdinController::class);
     Route::resource('rumdin-golongan', RumdinGolonganController::class);
+    Route::resource('pembangunan-rumdin', PembangunanRumdinController::class);
     Route::resource('user', UserController::class);
 
     // Route::resource('tanah-polda', TanahPoldaController::class);
